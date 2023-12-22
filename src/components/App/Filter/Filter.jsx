@@ -1,6 +1,8 @@
+// Filter.js
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from '../redux/contacts/contactsSlice';
+import { setFilter } from '../../../redux/contacts/contactsSlice';
+import './Filter.css'; // Додано імпорт стилів
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -11,7 +13,9 @@ const Filter = () => {
   };
 
   return (
-    <div>
+    <div className="Filter">
+      {' '}
+      {/* Додано клас Filter */}
       <label>
         Filter contacts by name:
         <input type="text" value={filter} onChange={handleFilterChange} />

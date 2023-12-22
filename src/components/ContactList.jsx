@@ -1,16 +1,11 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ContactListItem from './ContactListItem';
-import { deleteContact } from '../redux/contacts/contactsSlice';
+import { selectContacts, selectFilter } from '../redux/Selector';
 
 const ContactList = () => {
-  const dispatch = useDispatch();
-  const { data: contacts = [], filter } = useSelector(state => state.contacts);
-
-  if (!Array.isArray(contacts)) {
-    console.error('contacts is not an array:', contacts);
-    return null;
-  }
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
 
   const getFilteredContacts = () => {
     return contacts.filter(contact =>
@@ -20,23 +15,10 @@ const ContactList = () => {
 
   const filteredContacts = getFilteredContacts();
 
-  const deleteContactHandler = contactId => {
-    const confirmDelete = window.confirm(
-      'Are you sure you want to delete this contact?'
-    );
-    if (confirmDelete) {
-      dispatch(deleteContact(contactId));
-    }
-  };
-
   return (
     <ul>
       {filteredContacts.map(contact => (
-        <ContactListItem
-          key={contact.id}
-          contact={contact}
-          onDeleteContact={deleteContactHandler}
-        />
+        <ContactListItem key={contact.id} contact={contact} />
       ))}
     </ul>
   );
